@@ -1,25 +1,57 @@
-import logo from './logo.svg';
+import {data} from "./data";
+import { useState } from "react";
 import './App.css';
 
 function App() {
+
+  const [dishes, setDishes] = useState(data);
+
+  const removeDishes = (id) => {
+    let newDishes = dishes.filter ( dish => dish.id !== id);
+    setDishes(newDishes)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      
+      <div>
+        <h1 className="container"> {dishes.length} dishes for dinner </h1>
+
+      </div>
+
+      {dishes.map ( (element => { 
+        const { id, dish, image } = element;
+
+        return( 
+          <div   key={id} > 
+
+            <div className="container">
+              <h2> {id}. {dish}  </h2>
+            </div>
+
+            <div className="container" > 
+              <img src={image} alt='dish' width='500px'  />
+            </div>
+
+            <div className="container" >
+
+              <button onClick={ () => removeDishes(id)}> Remove </button>
+
+            </div>
+
+          </div>
+        )
+      }))}
+
+      <div className="container btn">
+        <button onClick={ () => setDishes( [] ) } > delete all </button>
+      </div>
+
+
+
     </div>
-  );
+  )
+  
 }
 
 export default App;
